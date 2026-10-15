@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>СДЭК - Регистрация клиента</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f4f5f7;
+      margin: 0;
+      padding: 16px;
+      color: #1c1c1e;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo h2 {
+      color: #008B47; /* Фирменный зеленый СДЭК */
+      margin: 5px 0 0 0;
+      font-size: 22px;
+      font-weight: 800;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    label {
+      font-size: 13px;
+      color: #6b7280;
+      display: block;
+      margin-bottom: 4px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 15px;
+      outline: none;
+    }
+    input:focus {
+      border-color: #008B47;
+    }
+    .btn-submit {
+      width: 100%;
+      background-color: #008B47;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">
+    <h2>СДЭК</h2>
+    <p style="font-size:12px; color:#666; margin:2px 0 0 0;">Подключение к сервису</p>
+  </div>
+
+  <form id="cdekForm">
+    <div class="form-group">
+      <label>ФИО / Наименование компании</label>
+      <input type="text" id="name" placeholder="Иванов Иван Иванович" required>
+    </div>
+    <div class="form-group">
+      <label>Номер телефона</label>
+      <input type="tel" id="phone" placeholder="+7 (999) 000-00-00" required>
+    </div>
+    <div class="form-group">
+      <label>Город</label>
+      <input type="text" id="city" placeholder="Москва" required>
+    </div>
+    <button type="button" class="btn-submit" onclick="sendData()">Отправить заявку</button>
+  </form>
+</div>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.expand();
+
+  function sendData() {
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const city = document.getElementById('city').city || document.getElementById('city').value;
+
+    if(!name || !phone) {
+      alert("Пожалуйста, заполните основные поля");
+      return;
+    }
+
+    const data = {
+      name: name,
+      phone: phone,
+      city: city
+    };
+
+    // Отправка данных обратно в бота
+    tg.sendData(JSON.stringify(data));
+  }
+</script>
+</body>
+</html>
